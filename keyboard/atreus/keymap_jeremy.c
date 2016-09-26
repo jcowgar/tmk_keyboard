@@ -21,6 +21,9 @@ The 5 layers can be viewed graphically:
 
 #include "keymap_common.h"
 
+// Undefine if you use QWERTY
+#define SOFTWARE_COLEMAK
+
 // Reduce the time to decision of a tap or hold
 #define TAPPING_TERM 150
 
@@ -46,10 +49,23 @@ The 5 layers can be viewed graphically:
 #define FN_SFSP (KC_FN0 + SFSP)
 #define FN_SFET (KC_FN0 + SFET)
 
+#ifdef SOFTWARE_COLEMAK
+  // Colemak defined in software is playing games with me
+  #define KEY_SAVE KC_D
+  #define KEY_CLSE KC_W
+  #define KEY_OPEN KC_SCLN
+  #define MY_SCLN  KC_P
+#else
+  #define KEY_SAVE KC_S
+  #define KEY_CLSE KC_W
+  #define KEY_OPEN KC_O
+  #define MY_SCLN  KC_SCLN
+#endif
+
 // Some handy macros to keep the keymaps clean and easier to maintain
-#define KM_SAVE ACTION_MODS_KEY(MOD_LGUI, KC_D)    // Colemak to Qwerty in software playing games
-#define KM_CLSE ACTION_MODS_KEY(MOD_LGUI, KC_W)
-#define KM_OPEN ACTION_MODS_KEY(MOD_LGUI, KC_SCLN) // Colemak to Qwerty in software playing games
+#define KM_SAVE ACTION_MODS_KEY(MOD_LGUI, KEY_SAVE)    // Colemak to Qwerty in software playing games
+#define KM_CLSE ACTION_MODS_KEY(MOD_LGUI, KEY_CLSE)
+#define KM_OPEN ACTION_MODS_KEY(MOD_LGUI, KEY_OPEN) // Colemak to Qwerty in software playing games
 #define KM_COPY ACTION_MODS_KEY(MOD_LGUI, KC_C)
 #define KM_CUT  ACTION_MODS_KEY(MOD_LGUI, KC_X)
 #define KM_PAST ACTION_MODS_KEY(MOD_LGUI, KC_V)
@@ -69,8 +85,7 @@ The 5 layers can be viewed graphically:
 #define KC_RPRN ACTION_MODS_KEY(MOD_LSFT, KC_0)
 #define KC_UNDS ACTION_MODS_KEY(MOD_LSFT, KC_MINUS)
 #define KC_PLUS ACTION_MODS_KEY(MOD_LSFT, KC_EQL)
-#define CM_SCLN KC_P                               // Colemak to Qwerty in software playing games
-#define CM_COLN ACTION_MODS_KEY(MOD_LSFT, CM_SCLN) // Colemak to Qwerty in software playing games
+#define MY_COLN ACTION_MODS_KEY(MOD_LSFT, MY_SCLN)
 #define KC_QUES ACTION_MODS_KEY(MOD_LSFT, KC_SLSH)
 #define KC_TILD ACTION_MODS_KEY(MOD_LSFT, KC_GRV)
 #define KC_PIPE ACTION_MODS_KEY(MOD_LSFT, KC_BSLS)
@@ -90,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [NUMS] = {
   {KC_TRNS, KC_TRNS, KC_TRNS, KC_ASTR, KC_SLSH, KC_TRNS, KC_TRNS, KC_7,    KC_8,    KC_9,    KC_SLSH},
   {KC_TRNS, KC_TRNS, KC_EQL,  KC_PLUS, KC_MINS, KC_TRNS, KC_LPRN, KC_4,    KC_5,    KC_6,    KC_ASTR},
-  {KC_TRNS, KC_TRNS, KC_DOT,  KC_COMM, CM_SCLN, KC_TRNS, KC_RPRN, KC_1,    KC_2,    KC_3,    KC_MINS},
+  {KC_TRNS, KC_TRNS, KC_DOT,  KC_COMM, KC_SCLN, KC_TRNS, KC_RPRN, KC_1,    KC_2,    KC_3,    KC_MINS},
   {KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_0,    KC_DOT,  KC_EQL,  KC_PLUS}
 },
 [FKEY] = {
@@ -106,8 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_TRNS, KC_TRNS, FN_BOOT, KC_TRNS, KC_TAB,  KM_CUT,  KM_PAST, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS}
 },
 [SYMB] = {
-  {KC_BSLS, KC_EXLM, KC_LABK, KC_RABK, CM_COLN, KC_TRNS, KC_UNDS, KC_DLR,  KC_QUES, KC_TRNS, KC_PERC},
-  {KC_AT,   KC_AMPR, KC_LPRN, KC_RPRN, CM_SCLN, KC_TRNS, KC_COMM, KC_DOT,  KC_QUOT, KC_TRNS, KC_TILD},
+  {KC_BSLS, KC_EXLM, KC_LABK, KC_RABK, MY_COLN, KC_TRNS, KC_UNDS, KC_DLR,  KC_QUES, KC_TRNS, KC_PERC},
+  {KC_AT,   KC_AMPR, KC_LPRN, KC_RPRN, MY_SCLN, KC_TRNS, KC_COMM, KC_DOT,  KC_QUOT, KC_TRNS, KC_TILD},
   {KC_HASH, KC_PIPE, KC_LCBR, KC_RCBR, KC_SLSH, KC_TRNS, KC_TRNS, KC_GRV,  KC_DQT,  KC_TRNS, KC_CIRC},
   {KC_TRNS, KC_TRNS, KC_LBRC, KC_RBRC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS}
 }};
