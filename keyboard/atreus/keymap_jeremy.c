@@ -28,16 +28,18 @@ The 5 layers can be viewed graphically:
 #define TAPPING_TERM 150
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
-#define BOOT 0 // Bootloader (not to be confused with default layer)
-#define ALPH 0 // Alphabet Layer
-#define NUMS 1 // Number Layer
-#define FKEY 2 // Function Key Layer
-#define CURS 3 // Cursor Layer
-#define SYMB 4 // Symbol Layer
-#define OPBS 5 // Option or Backspace
-#define CMDL 6 // Command or Delete
-#define SFSP 7 // Left Shift or Space
-#define SFET 8 // Right Shift or Enter
+#define BOOT  0 // Bootloader (not to be confused with default layer)
+#define ALPH  0 // Alphabet Layer
+#define NUMS  1 // Number Layer
+#define FKEY  2 // Function Key Layer
+#define CURS  3 // Cursor Layer
+#define SYMB  4 // Symbol Layer
+#define OPBS  5 // Option or Backspace
+#define CMDL  6 // Command or Delete
+#define SFSP  7 // Left Shift or Space
+#define SFET  8 // Right Shift or Enter
+#define CTTB  9 // Control or Tab
+#define CTES 10 // Control or Escape
 
 #define FN_BOOT (KC_FN0 + BOOT)
 #define FN_NUMS (KC_FN0 + NUMS)
@@ -48,6 +50,8 @@ The 5 layers can be viewed graphically:
 #define FN_CMDL (KC_FN0 + CMDL)
 #define FN_SFSP (KC_FN0 + SFSP)
 #define FN_SFET (KC_FN0 + SFET)
+#define FN_CTTB (KC_FN0 + CTTB)
+#define FN_CTES (KC_FN0 + CTES)
 
 #ifdef SOFTWARE_COLEMAK
   // Colemak defined in software is playing games with me
@@ -89,8 +93,8 @@ The 5 layers can be viewed graphically:
 #define KC_QUES ACTION_MODS_KEY(MOD_LSFT, KC_SLSH)
 #define KC_TILD ACTION_MODS_KEY(MOD_LSFT, KC_GRV)
 #define KC_PIPE ACTION_MODS_KEY(MOD_LSFT, KC_BSLS)
-#define KC_LCBR ACTION_MODS_KEY(MOD_LSFT, KC_LABK)
-#define KC_RCBR ACTION_MODS_KEY(MOD_LSFT, KC_RABK)
+#define KC_LCBR ACTION_MODS_KEY(MOD_LSFT, KC_LBRC)
+#define KC_RCBR ACTION_MODS_KEY(MOD_LSFT, KC_RBRC)
 #define KC_DQT  ACTION_MODS_KEY(MOD_LSFT, KC_QUOT)
 #define KC_LABK ACTION_MODS_KEY(MOD_LSFT, KC_COMM)
 #define KC_RABK ACTION_MODS_KEY(MOD_LSFT, KC_DOT)
@@ -100,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_TRNS, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P},
   {KC_A,    FN_NUMS, FN_FKEY, KC_F,    KC_G,    KC_TRNS, KC_H,    KC_J,    FN_CURS, FN_SYMB, KC_SCLN},
   {KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    FN_OPBS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH},
-  {KC_LCTL, FN_BOOT, KC_NO,   KC_TAB,  FN_SFSP, FN_CMDL, FN_SFET, KC_LSFT, KC_NO,   KC_ESC,  KC_RCTL}
+  {FN_CTTB, KC_LBRC, KC_LCBR, KC_LPRN, FN_SFSP, FN_CMDL, FN_SFET, KC_RPRN, KC_RCBR, KC_RBRC, FN_CTES}
 },
 [NUMS] = {
   {KC_TRNS, KC_TRNS, KC_TRNS, KC_ASTR, KC_SLSH, KC_TRNS, KC_TRNS, KC_7,    KC_8,    KC_9,    KC_SLSH},
@@ -136,7 +140,9 @@ const uint16_t PROGMEM fn_actions[] = {
   [OPBS] = ACTION_MODS_TAP_KEY(MOD_LALT, KC_BSPC),
   [CMDL] = ACTION_MODS_TAP_KEY(MOD_LGUI, KC_DEL),
   [SFSP] = ACTION_MODS_TAP_KEY(MOD_LSFT, KC_SPC),
-  [SFET] = ACTION_MODS_TAP_KEY(MOD_RSFT, KC_ENT)
+  [SFET] = ACTION_MODS_TAP_KEY(MOD_RSFT, KC_ENT),
+  [CTTB] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_TAB),
+  [CTES] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ESC)
 };
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
